@@ -1,0 +1,153 @@
+#
+# Copyright (C) 2020 The Android Open Source Project
+# Copyright (C) 2020 The TWRP Open Source Project
+# Copyright (C) 2020 SebaUbuntu's TWRP device tree generator
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+DEVICE_PATH := device/vivo/PD2068
+
+# Build Flags
+TW_MAINTAINER := qiushui105
+TW_DEVICE_VERSION := vivo Y31s Standard Edition
+RECOVERY_VARIANT := TWRP_11
+ALLOW_MISSING_DEPENDENCIES := true
+LC_ALL := "C"
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
+# Properties
+TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
+# Architecture
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := cortex-a78
+
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := generic
+TARGET_BOARD_SUFFIX := _64
+TARGET_USES_64_BIT_BINDER := true
+TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a55
+
+
+# Bootloader
+TARGET_BOOTLOADER_BOARD_NAME := vivo
+TARGET_NO_BOOTLOADER := true
+TARGET_USES_UEFI := true
+
+# Platform
+TARGET_BOARD_PLATFORM := mt6833
+
+# Kernel
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 product.version=PD2068_A_1.10.12 fingerprint.abbr=11/RP1A.200720.012 buildvariant=user
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/Image.gz
+TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb.img
+BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)/prebuilt/dtbo.img
+BOARD_INCLUDE_RECOVERY_DTBO := true
+#BOARD_INCLUDE_DTB_IN_BOOTIMG := true
+BOARD_BOOTIMG_HEADER_VERSION := 2
+BOARD_KERNEL_BASE := 0x40078000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_HASH_TYPE := sha1
+BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_RAMDISK_OFFSET := 0x11088000
+BOARD_SECOND_OFFSET := 0xbff88000
+BOARD_KERNEL_TAGS_OFFSET := 0x07c08000
+BOARD_RECOVERY_DTBO_OFFSET  := 46596096
+BOARD_DTB_OFFSET  := 0x07c08000
+BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
+BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --recovery_dtbo $(BOARD_PREBUILT_DTBOIMAGE)
+BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOTIMG_HEADER_VERSION)
+BOARD_MKBOOTIMG_ARGS += --second_offset $(BOARD_SECOND_OFFSET)
+
+#BOARD_KERNEL_IMAGE_NAME := Image.gz
+#TARGET_KERNEL_ARCH := arm64
+#TARGET_KERNEL_HEADER_ARCH := arm64
+#TARGET_KERNEL_SOURCE := kernel/vivo/PD2068
+#TARGET_KERNEL_CONFIG := PD2068_defconfig
+#PRODUCT_COPY_FILES := \
+        $(DEVICE_PATH)/prebuilt/dtb.img:dtb.img
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := PD2068
+
+# File systems
+BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 100663296 # This is the maximum known partition size, but it can be higher, so we just omit it
+BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
+BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+TARGET_USES_MKE2FS := true
+TARGET_COPY_OUT_VENDOR := vendor
+# Dynamic Partitions
+BOARD_MAIN_SIZE := 10737418240
+BOARD_SUPER_PARTITION_SIZE := 10737418240
+BOARD_SUPER_PARTITION_GROUPS := main
+BOARD_GOOGLE_DYNAMIC_PARTITIONS_SIZE := 10737410048
+BOARD_GOOGLE_DYNAMIC_PARTITIONS_LIST := \
+    system vendor product odm oem vgc
+TARGET_COPY_OUT_VENDOR := vendor
+BOARD_SUPPRESS_SECURE_ERASE := true
+
+# Recovery
+TARGET_NO_RECOVERY := false
+BOARD_CHARGER_DISABLE_INIT_BLANK := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# Metadata
+BOARD_USES_METADATA_PARTITION := true
+
+# Crypto
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_CRYPTO_FBE := true
+BOARD_USES_METADATA_PARTITION := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := 2099-12-31
+PLATFORM_VERSION := 20.1.0
+
+# TWRP Configuration
+TW_THEME := portrait_hdpi
+TW_EXTRA_LANGUAGES := true
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_INCLUDE_NTFS_3G := true
+TW_USE_TOOLBOX := true
+TW_NO_SCREEN_BLANK := true
+#TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
+TW_EXCLUDE_APEX := true
+TW_EXCLUDE_DEFAULT_USB_INIT := true
+TW_HAS_MTP := true
+TW_DEFAULT_LANGUAGE := zh_CN
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.usb0/lun.%d/file
+TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
+TW_MAX_BRIGHTNESS := 2047
+TW_DEFAULT_BRIGHTNESS := 1200
+# For debugging
+TWRP_INCLUDE_LOGCAT := true
+TARGET_USES_LOGD := true

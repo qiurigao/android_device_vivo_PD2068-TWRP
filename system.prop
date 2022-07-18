@@ -1,0 +1,7 @@
+ro.postinstall.fstab.prefix=/system
+ro.crypto.volume.filenames_mode=aes-256-cts
+ro.sys.usb.storage.type=mtp
+ro.vendor.mtk_tee_gp_support=1
+ro.vendor.mtk_microtrust_tee_support=1
+ro.vivo.hardware.version=PD2068MA
+ro.vivo.oem.name=PD2068_CN-ZH_FULL_SC_CN-YD-A
